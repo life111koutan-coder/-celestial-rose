@@ -198,15 +198,36 @@
     flex-direction:column;
     align-items:center;
   }
+  .short-media{
+    position:relative;
+    width:100%;
+    max-width:320px;
+  }
   .short-item video{
+    display:block;
     width:100%;
     max-width: 320px;
     border-radius: 4px;
     background: #000;
     border: 1px solid rgba(242,238,230,0.15);
-    aspect-ratio: 9/16;
-    object-fit: cover;
+    aspect-ratio: 16/9;
+    object-fit: contain;
   }
+  .short-load{
+    position:absolute;
+    inset:0;
+    width:100%;
+    border:1px solid rgba(242,238,230,0.15);
+    border-radius:4px;
+    background:linear-gradient(160deg, rgba(17,13,34,.88), rgba(8,8,18,.94));
+    color:var(--ivory);
+    font:inherit;
+    cursor:pointer;
+    padding:1.5rem;
+    text-align:center;
+  }
+  .short-load:disabled{ cursor:progress; }
+  .short-load[hidden]{ display:none; }
   .short-item .short-title{
     margin-top: 0.9rem;
     font-family:"Shippori Mincho", serif;
@@ -216,7 +237,7 @@
   }
   @media (max-width: 800px){
     .shorts-grid{ grid-template-columns: 1fr; gap: 2.4rem; }
-    .short-item video{ max-width: 280px; margin: 0 auto; }
+    .short-media{ max-width: 280px; }
   }
 
   /* ---------- latest release ---------- */
@@ -607,22 +628,25 @@
 
   <div class="shorts-grid">
     <div class="short-item">
-      <video controls preload="metadata" poster="">
-        <source src="embedded-video-01.mp4" type="video/mp4">
-      </video>
-      <div class="short-title">粉雪が降る夜</div>
+      <div class="short-media" data-video-prefix="video-01" data-video-parts="6" data-video-bytes="233322417">
+        <video controls playsinline preload="none"></video>
+        <button class="short-load" type="button">星降る駅で<br>読み込んで再生</button>
+      </div>
+      <div class="short-title">星降る駅で</div>
     </div>
     <div class="short-item">
-      <video controls preload="metadata" poster="">
-        <source src="embedded-video-02.mp4" type="video/mp4">
-      </video>
-      <div class="short-title">Summer Memories</div>
+      <div class="short-media" data-video-prefix="video-02" data-video-parts="5" data-video-bytes="180330761">
+        <video controls playsinline preload="none"></video>
+        <button class="short-load" type="button">Eternal Snow<br>読み込んで再生</button>
+      </div>
+      <div class="short-title">Eternal Snow</div>
     </div>
     <div class="short-item">
-      <video controls preload="metadata" poster="">
-        <source src="embedded-video-03.mp4" type="video/mp4">
-      </video>
-      <div class="short-title">蒼焔のシンフォニア</div>
+      <div class="short-media" data-video-prefix="video-03" data-video-parts="5" data-video-bytes="172809462">
+        <video controls playsinline preload="none"></video>
+        <button class="short-load" type="button">FIND THE WAY<br>読み込んで再生</button>
+      </div>
+      <div class="short-title">FIND THE WAY</div>
     </div>
   </div>
 </section>
@@ -1074,6 +1098,71 @@
     });
   });
 
+</script>
+
+<script>
+  document.querySelectorAll('.short-media').forEach((media) => {
+    const video = media.querySelector('video');
+    const button = media.querySelector('.short-load');
+    const prefix = media.dataset.videoPrefix;
+    const partCount = Number(media.dataset.videoParts);
+    const expectedBytes = Number(media.dataset.videoBytes);
+    let objectUrl = null;
+
+    video.addEventListener('play', () => {
+      document.querySelectorAll('.short-media video').forEach((other) => {
+        if (other !== video) other.pause();
+      });
+    });
+
+    button.addEventListener('click', async () => {
+      if (objectUrl) {
+        try {
+          await video.play();
+          button.hidden = true;
+        } catch (error) {
+          button.textContent = '動画の再生ボタンを押してください';
+        }
+        return;
+      }
+
+      button.disabled = true;
+      const parts = [];
+      let receivedBytes = 0;
+      try {
+        for (let number = 1; number <= partCount; number++) {
+          button.textContent = `読み込み中 ${Math.round(receivedBytes / expectedBytes * 100)}%`;
+          const path = `media/${prefix}.part${String(number).padStart(2, '0')}`;
+          const response = await fetch(path);
+          if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
+          const part = await response.arrayBuffer();
+          parts.push(part);
+          receivedBytes += part.byteLength;
+        }
+        if (receivedBytes !== expectedBytes) throw new Error('動画のサイズが一致しません');
+
+        objectUrl = URL.createObjectURL(new Blob(parts, { type: 'video/mp4' }));
+        video.src = objectUrl;
+        video.load();
+        button.disabled = false;
+        button.textContent = '再生する';
+        try {
+          await video.play();
+          button.hidden = true;
+        } catch (error) {
+          // Some browsers require a second tap after the download finishes.
+        }
+      } catch (error) {
+        console.error('Video loading failed.', error);
+        button.disabled = false;
+        button.textContent = '読み込み失敗・再試行';
+      }
+    });
+
+    window.addEventListener('pagehide', () => {
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    });
+  });
 </script>
 
 
