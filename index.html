@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<!-- Celestial Rose Official v2.0 FINAL / ANOS Vocal / New Song Audio -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Celestial Rose | セレスティアルローズ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep: #050714;
+    --navy: #0b0f2b;
+    --navy-soft: #12173d;
+    --rose: #e8a0bf;
+    --gold: #d4af6a;
+    --ivory: #f2eee6;
+    --lavender: #9a8fc4;
+    --c-anos: #c48fd9;
+    --c-eiru: #7ecbe8;
+    --c-alya: #dfe3ef;
+    --c-reina: #e0575c;
+    --c-celes: #ecc873;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior:smooth; }
+
+  body{
+    background: var(--navy-deep);
+    color: var(--ivory);
+    font-family: "Noto Sans JP", sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+
+  a { color: inherit; text-decoration:none; }
+
+  .eyebrow{
+    font-family:"Cormorant Garamond", serif;
+    font-style: italic;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    color: var(--gold);
+  }
+
+  h1, h2, h3, .display{
+    font-family:"Shippori Mincho", serif;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  /* ---------- starfield ---------- */
+  #stars-canvas{
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position: relative;
+    min-height: 100svh;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding: 2rem 1.5rem;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 15%, rgba(196,143,217,0.10), transparent 60%),
+      linear-gradient(180deg, rgba(5,7,20,0.62) 0%, rgba(5,7,20,0.78) 55%, var(--navy-deep) 100%),
+      url('embedded-01.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .constellation{
+    position: relative;
+    width: min(560px, 88vw);
+    height: 140px;
+    margin: 0 auto 2.2rem;
+  }
+  .constellation svg{ width:100%; height:100%; overflow: visible; }
+  .constellation .line{
+    stroke: var(--lavender);
+    stroke-width: 1;
+    opacity: 0.35;
+  }
+  .constellation .node{
+    filter: drop-shadow(0 0 6px currentColor);
+    animation: twinkle 3.6s ease-in-out infinite;
+  }
+  .constellation .node:nth-child(1){ animation-delay: 0s; }
+  .constellation .node:nth-child(2){ animation-delay: 0.5s; }
+  .constellation .node:nth-child(3){ animation-delay: 1s; }
+  .constellation .node:nth-child(4){ animation-delay: 1.5s; }
+  .constellation .node:nth-child(5){ animation-delay: 2s; }
+
+  @keyframes twinkle{
+    0%, 100% { opacity: 0.55; r: 3.2; }
+    50% { opacity: 1; r: 4.4; }
+  }
+
+  .hero .eyebrow{ margin-bottom: 1rem; opacity: 0; animation: fade-up 1s ease forwards 0.2s; text-shadow: 0 2px 12px rgba(0,0,0,0.6); }
+  .hero h1{
+    font-size: clamp(2.6rem, 8vw, 5rem);
+    line-height: 1.15;
+    background: linear-gradient(120deg, var(--ivory) 20%, var(--rose) 55%, var(--gold) 85%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 2px 16px rgba(0,0,0,0.55));
+    opacity: 0;
+    animation: fade-up 1s ease forwards 0.4s;
+  }
+  .hero .kana{
+    display:block;
+    font-size: clamp(1rem, 2.4vw, 1.3rem);
+    letter-spacing: 0.3em;
+    color: var(--lavender);
+    margin-top: 0.6rem;
+    font-family: "Shippori Mincho", serif;
+    font-weight: 400;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+    opacity: 0;
+    animation: fade-up 1s ease forwards 0.6s;
+  }
+  .hero .tagline{
+    margin-top: 1.6rem;
+    font-size: clamp(0.95rem, 2vw, 1.15rem);
+    color: rgba(242,238,230,0.92);
+    max-width: 34em;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+    opacity: 0;
+    animation: fade-up 1s ease forwards 0.8s;
+  }
+
+  @keyframes fade-up{
+    from{ opacity:0; transform: translateY(14px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  .scroll-hint{
+    position:absolute;
+    bottom: 2.2rem;
+    left:50%;
+    transform: translateX(-50%);
+    font-family:"Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--lavender);
+    letter-spacing: 0.15em;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:0.5rem;
+    opacity: 0;
+    animation: fade-up 1s ease forwards 1.2s;
+  }
+  .scroll-hint .stem{
+    width:1px; height:34px;
+    background: linear-gradient(var(--lavender), transparent);
+    animation: stretch 2.4s ease-in-out infinite;
+  }
+  @keyframes stretch{ 0%,100%{ transform: scaleY(0.6); opacity:0.4; } 50%{ transform: scaleY(1); opacity:0.9; } }
+
+  /* ---------- section shared ---------- */
+  section{
+    position: relative;
+    z-index: 1;
+    padding: 7rem 1.5rem;
+    max-width: 1180px;
+    margin: 0 auto;
+    background: var(--navy-deep);
+  }
+  .hero{ background-color: var(--navy-deep); }
+  footer{ background: var(--navy-deep); }
+  .section-head{ text-align:center; margin-bottom: 3.4rem; }
+  .section-head h2{ font-size: clamp(1.7rem, 4vw, 2.4rem); margin-top: 0.6rem; }
+
+  /* ---------- shorts ---------- */
+  .shorts-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .short-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .short-item video{
+    width:100%;
+    max-width: 320px;
+    border-radius: 4px;
+    background: #000;
+    border: 1px solid rgba(242,238,230,0.15);
+    aspect-ratio: 9/16;
+    object-fit: cover;
+  }
+  .short-item .short-title{
+    margin-top: 0.9rem;
+    font-family:"Shippori Mincho", serif;
+    font-size: 0.98rem;
+    color: var(--ivory);
+    text-align:center;
+  }
+  @media (max-width: 800px){
+    .shorts-grid{ grid-template-columns: 1fr; gap: 2.4rem; }
+    .short-item video{ max-width: 280px; margin: 0 auto; }
+  }
+
+  /* ---------- latest release ---------- */
+  .release{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items:center;
+    background: linear-gradient(135deg, rgba(212,175,106,0.06), rgba(196,143,217,0.04));
+    border: 1px solid rgba(212,175,106,0.22);
+    border-radius: 4px;
+    padding: 3rem;
+  }
+  .release-art{
+    aspect-ratio: 1;
+    border-radius: 4px;
+    background: url('embedded-02.jpg');
+    background-size: cover;
+    background-position: center 20%;
+    position: relative;
+    overflow: hidden;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+  }
+  .release-art .mark{
+    position: relative;
+    width: 100%;
+    padding: 0.9rem 0;
+    text-align: center;
+    font-family:"Shippori Mincho", serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.28em;
+    color: rgba(242,238,230,0.75);
+    background: linear-gradient(0deg, rgba(5,7,20,0.85), transparent);
+  }
+  .release-info .eyebrow{ margin-bottom: 0.8rem; }
+  .release-info h3{ font-size: clamp(1.6rem, 3.4vw, 2.2rem); margin-bottom: 0.9rem; }
+  .release-info p{ color: rgba(242,238,230,0.88); line-height: 1.9; font-size: 0.95rem; margin-bottom: 1.6rem; }
+  .release-tags{ display:flex; flex-wrap:wrap; gap: 0.6rem; margin-bottom: 1.8rem; }
+  .release-tags span{
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid rgba(242,238,230,0.32);
+    border-radius: 100px;
+    color: rgba(242,238,230,0.9);
+  }
+  .festival-set{
+    display:flex;
+    flex-direction:column;
+    gap: 2.4rem;
+  }
+  .festival-set .release-card-eyebrow{
+    text-align:center;
+    margin-bottom: -0.6rem;
+  }
+  .btn{
+    display:inline-block;
+    font-family:"Shippori Mincho", serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    padding: 0.85rem 1.9rem;
+    border: 1px solid var(--gold);
+    border-radius: 2px;
+    color: var(--gold);
+    transition: all 0.3s ease;
+  }
+  .btn:hover{ background: var(--gold); color: var(--navy-deep); }
+
+  /* ---------- members ---------- */
+  .members-grid{
+    display:grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.1rem;
+  }
+  .member-card{
+    position:relative;
+    border-radius: 4px;
+    overflow:hidden;
+    aspect-ratio: 3/4.2;
+    background-image: var(--photo);
+    background-size: cover;
+    background-position: top center;
+    border: 1px solid rgba(242,238,230,0.08);
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding: 1.3rem 1.1rem;
+    cursor: pointer;
+    transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  }
+  .member-card::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      linear-gradient(0deg, rgba(5,7,20,0.94) 0%, rgba(5,7,20,0.6) 42%, rgba(5,7,20,0.18) 68%, rgba(5,7,20,0.08) 100%),
+      radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--accent) 30%, transparent) 0%, transparent 40%);
+    transition: opacity 0.4s ease;
+  }
+  .member-card:hover,
+  .member-card.is-active{
+    transform: translateY(-6px);
+    border-color: var(--accent);
+    box-shadow: 0 0 28px -4px color-mix(in srgb, var(--accent) 65%, transparent), 0 0 60px -20px color-mix(in srgb, var(--accent) 50%, transparent);
+  }
+  .member-card:hover::before,
+  .member-card.is-active::before{ opacity: 0.92; }
+  .member-hint{
+    position:absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    font-family:"Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: rgba(5,7,20,0.5);
+    border: 1px solid color-mix(in srgb, var(--accent) 60%, transparent);
+    border-radius: 20px;
+    padding: 0.25rem 0.65rem;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+  }
+  .member-card:hover .member-hint{ opacity: 1; transform: translateY(0); }
+  .member-card.is-active .member-hint{ opacity: 0; }
+  .member-card .role{
+    position:relative;
+    font-family:"Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 0.78rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    margin-bottom: 0.3rem;
+  }
+  .member-card h3{
+    position:relative;
+    font-size: 1.35rem;
+    color: var(--ivory);
+    margin-bottom: 0.4rem;
+  }
+  .member-card p{
+    position:relative;
+    font-size: 0.76rem;
+    line-height: 1.7;
+    color: rgba(242,238,230,0.88);
+  }
+  .member-voice{
+    position:relative;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 1px solid transparent;
+    transition: max-height 0.4s ease, opacity 0.35s ease, margin-top 0.4s ease, padding-top 0.4s ease, border-color 0.4s ease;
+  }
+  .member-card.is-active .member-voice{
+    max-height: 120px;
+    opacity: 1;
+    margin-top: 0.7rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(242,238,230,0.14);
+  }
+  .member-voice p{
+    position:relative;
+    font-family:"Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: var(--ivory);
+    margin:0;
+  }
+
+  /* ---------- live gallery ---------- */
+  .live-feature{
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1.1rem;
+    position: relative;
+  }
+  .live-feature img{
+    width: 100%;
+    display:block;
+  }
+  .live-gallery{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem;
+  }
+  .live-gallery img{
+    width:100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+    display:block;
+    aspect-ratio: 3/2;
+  }
+  @media (max-width: 700px){
+    .live-gallery{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------- songs ---------- */
+  .songs-list{ border-top: 1px solid rgba(242,238,230,0.12); }
+  .song-row{
+    display:grid;
+    grid-template-columns: 2.6rem 1fr auto;
+    gap: 1.4rem;
+    align-items:center;
+    padding: 1.3rem 0.4rem;
+    border-bottom: 1px solid rgba(242,238,230,0.12);
+    transition: background 0.3s ease;
+  }
+  .song-row:hover{ background: rgba(242,238,230,0.03); }
+  .song-row .num{ font-family:"Cormorant Garamond", serif; font-style: italic; color: var(--lavender); font-size: 0.95rem; }
+  .song-row .title{ font-family:"Shippori Mincho", serif; font-size: 1.05rem; }
+  .song-row .sub{ font-size: 0.78rem; color: rgba(242,238,230,0.72); margin-top: 0.25rem; }
+  .song-row .vocal{ font-size: 0.78rem; color: var(--gold); text-align:right; }
+
+  /* ---------- social ---------- */
+  .social{
+    text-align:center;
+  }
+  .social-links{
+    display:flex;
+    justify-content:center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2.2rem;
+  }
+  .social-links a{
+    padding: 0.9rem 2.2rem;
+    border: 1px solid rgba(242,238,230,0.25);
+    border-radius: 100px;
+    font-size: 0.88rem;
+    letter-spacing: 0.06em;
+    transition: all 0.3s ease;
+  }
+  .social-links a:hover{ border-color: var(--rose); color: var(--rose); }
+
+  footer{
+    position: relative;
+    z-index: 1;
+    text-align:center;
+    padding: 3rem 1.5rem 2.5rem;
+    color: rgba(242,238,230,0.4);
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    border-top: 1px solid rgba(242,238,230,0.08);
+  }
+
+  /* ---------- focus ---------- */
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 900px){
+    .release{ grid-template-columns: 1fr; padding: 2rem; }
+    .members-grid{ grid-template-columns: repeat(2, 1fr); }
+    section{ padding: 5rem 1.2rem; }
+  }
+  @media (max-width: 480px){
+    .members-grid{ grid-template-columns: 1fr 1fr; }
+    .song-row{ grid-template-columns: 2rem 1fr; }
+    .song-row .vocal{ grid-column: 2; text-align:left; margin-top: 0.2rem; }
+    .hero{
+      background-size: contain;
+      background-position: center 12%;
+      background-color: var(--navy-deep);
+      background-repeat: no-repeat;
+    }
+  }
+
+
+  /* ---------- v15 audio / member interaction patch ---------- */
+  .release-art::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background: radial-gradient(circle at center, rgba(5,7,20,0.05), rgba(5,7,20,0.34));
+    pointer-events:none;
+  }
+  .release-play{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    z-index:2;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    border: 1px solid rgba(212,175,106,0.9);
+    background: rgba(5,7,20,0.62);
+    color: var(--gold);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:0.15rem;
+    cursor:pointer;
+    box-shadow: 0 0 26px rgba(212,175,106,0.28), inset 0 0 18px rgba(242,238,230,0.08);
+    backdrop-filter: blur(4px);
+    transition: transform 0.28s ease, background 0.28s ease, box-shadow 0.28s ease;
+  }
+  .release-play:hover,
+  .release-play.is-playing{
+    transform: translate(-50%, -50%) scale(1.06);
+    background: rgba(5,7,20,0.82);
+    box-shadow: 0 0 34px rgba(212,175,106,0.54), 0 0 70px rgba(232,160,191,0.18);
+  }
+  .release-play .play-icon{ font-size: 1.7rem; line-height:1; margin-left:0.12rem; }
+  .release-play .play-label{ font-family:"Cormorant Garamond", serif; font-size:0.72rem; letter-spacing:0.16em; }
+  .release-art .mark{ z-index:2; }
+
+  .member-card:hover::after,
+  .member-card.is-active::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    border-radius:4px;
+    box-shadow: inset 0 0 36px color-mix(in srgb, var(--accent) 42%, transparent);
+  }
+  .member-card.is-active .member-voice{
+    max-height: 170px;
+    overflow-y: auto;
+    padding-right: 0.35rem;
+    overscroll-behavior: contain;
+  }
+  .member-card.is-active .member-voice::-webkit-scrollbar{ width: 5px; }
+  .member-card.is-active .member-voice::-webkit-scrollbar-thumb{
+    background: color-mix(in srgb, var(--accent) 60%, transparent);
+    border-radius: 20px;
+  }
+  .member-card.is-active .member-voice::-webkit-scrollbar-track{ background: rgba(242,238,230,0.08); }
+  @media (hover: none){
+    .member-hint{ opacity: .82; transform: translateY(0); }
+  }
+  @media (max-width: 480px){
+    .release-play{ width:82px; height:82px; }
+    .member-card.is-active{ min-height: 430px; }
+    .member-card.is-active .member-voice{ max-height: 190px; }
+  }
+
+</style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="constellation" aria-hidden="true">
+    <svg viewBox="0 0 560 140" preserveAspectRatio="xMidYMid meet">
+      <line class="line" x1="40" y1="90" x2="160" y2="40"></line>
+      <line class="line" x1="160" y1="40" x2="290" y2="70"></line>
+      <line class="line" x1="290" y1="70" x2="410" y2="30"></line>
+      <line class="line" x1="410" y1="30" x2="520" y2="85"></line>
+      <circle class="node" cx="40" cy="90" r="3.5" fill="#c48fd9" style="color:#c48fd9"></circle>
+      <circle class="node" cx="160" cy="40" r="3.5" fill="#7ecbe8" style="color:#7ecbe8"></circle>
+      <circle class="node" cx="290" cy="70" r="3.5" fill="#dfe3ef" style="color:#dfe3ef"></circle>
+      <circle class="node" cx="410" cy="30" r="3.5" fill="#e0575c" style="color:#e0575c"></circle>
+      <circle class="node" cx="520" cy="85" r="3.5" fill="#ecc873" style="color:#ecc873"></circle>
+    </svg>
+  </div>
+
+  <span class="eyebrow">五つの星、ひとつの空</span>
+  <h1>Celestial Rose</h1>
+  <span class="kana">セレスティアルローズ</span>
+  <p class="tagline">星々の間に咲く、五つの声。90年代J-POPとアニソン、ロックが交わる場所で歌う。</p>
+
+  <div class="scroll-hint">
+    <span>SCROLL</span>
+    <span class="stem"></span>
+  </div>
+</section>
+
+<!-- ============ SHORTS ============ -->
+<section id="shorts">
+  <div class="section-head">
+    <span class="eyebrow">Shorts</span>
+    <h2>動く、五人の星</h2>
+  </div>
+
+  <div class="shorts-grid">
+    <div class="short-item">
+      <video controls preload="metadata" poster="">
+        <source src="embedded-video-01.mp4" type="video/mp4">
+      </video>
+      <div class="short-title">粉雪が降る夜</div>
+    </div>
+    <div class="short-item">
+      <video controls preload="metadata" poster="">
+        <source src="embedded-video-02.mp4" type="video/mp4">
+      </video>
+      <div class="short-title">Summer Memories</div>
+    </div>
+    <div class="short-item">
+      <video controls preload="metadata" poster="">
+        <source src="embedded-video-03.mp4" type="video/mp4">
+      </video>
+      <div class="short-title">蒼焔のシンフォニア</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LATEST RELEASE ============ -->
+<section id="latest">
+  <div class="section-head">
+    <span class="eyebrow">Latest Release</span>
+    <h2>SUMMER FESTIVAL LIVE 三部作</h2>
+  </div>
+
+  <div class="festival-set">
+    <div class="release">
+      <div class="release-art" style="background-image:url('festival-key-visual-1.jpg');">
+        <button class="release-play" id="release1Play" type="button" aria-label="Before the Lightを再生">
+          <span class="play-icon" id="release1PlayIcon">▶</span>
+          <span class="play-label" id="release1PlayLabel">PLAY</span>
+        </button>
+        <span class="mark">CELESTIAL ROSE</span>
+        <audio id="release1Audio" preload="metadata" src="before-the-light.mp3"></audio>
+      </div>
+      <div class="release-info">
+        <span class="eyebrow">New Single 1/3</span>
+        <h3>Before the Light</h3>
+        <p>夏の夜、まだ見ぬステージへ向かう前の静かな高鳴り。ANOSの歌声が導く、三部作の幕開けを飾るナンバー。</p>
+        <div class="release-tags">
+          <span>Summer Festival Suite</span>
+          <span>Main Vocal: ANOS</span>
+          <span>Prologue</span>
+        </div>
+        <a class="btn" href="#songs">楽曲一覧を見る</a>
+      </div>
+    </div>
+
+    <div class="release">
+      <div class="release-art" style="background-image:url('festival-key-visual-3.jpg');">
+        <button class="release-play" id="release2Play" type="button" aria-label="Break the Shellを再生">
+          <span class="play-icon" id="release2PlayIcon">▶</span>
+          <span class="play-label" id="release2PlayLabel">PLAY</span>
+        </button>
+        <span class="mark">CELESTIAL ROSE</span>
+        <audio id="release2Audio" preload="metadata" src="break-the-shell.mp3"></audio>
+      </div>
+      <div class="release-info">
+        <span class="eyebrow">New Single 2/3</span>
+        <h3>Break the Shell</h3>
+        <p>殻を破り、光の中へ駆け出す瞬間。レーザーが交差するステージのように、三部作の中で最も激しく燃え上がる一曲。</p>
+        <div class="release-tags">
+          <span>Summer Festival Suite</span>
+          <span>Main Vocal: ANOS</span>
+          <span>Climax</span>
+        </div>
+        <a class="btn" href="#songs">楽曲一覧を見る</a>
+      </div>
+    </div>
+
+    <div class="release">
+      <div class="release-art" style="background-image:url('festival-key-visual-2.jpg');">
+        <button class="release-play" id="release3Play" type="button" aria-label="I Am, Still Hereを再生">
+          <span class="play-icon" id="release3PlayIcon">▶</span>
+          <span class="play-label" id="release3PlayLabel">PLAY</span>
+        </button>
+        <span class="mark">CELESTIAL ROSE</span>
+        <audio id="release3Audio" preload="metadata" src="i-am-still-here.mp3"></audio>
+      </div>
+      <div class="release-info">
+        <span class="eyebrow">New Single 3/3</span>
+        <h3>I Am, Still Here</h3>
+        <p>歓声が鳴り止んだあとも、ここに在り続ける想い。三部作を締めくくる、静かで確かな余韻のバラード。</p>
+        <div class="release-tags">
+          <span>Summer Festival Suite</span>
+          <span>Main Vocal: ANOS</span>
+          <span>Epilogue</span>
+        </div>
+        <a class="btn" href="#songs">楽曲一覧を見る</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MEMBERS ============ -->
+<section id="members">
+  <div class="section-head">
+    <span class="eyebrow">Members</span>
+    <h2>五人の星</h2>
+  </div>
+
+  <div class="members-grid">
+    <div class="member-card" onclick="this.classList.toggle('is-active')" style="--accent:#c48fd9; --photo:url('embedded-03.jpg')">
+      <span class="member-hint">タップしてセリフを見る</span>
+      <span class="role">Vocal — Emotional</span>
+      <h3>ANOS</h3>
+      <p>紫とピンクのツインテール。感情を剥き出しにするように歌う、バンドの核。</p>
+          <div class="member-voice">
+        <p>「はじめまして、って感じもしないんだよね。なんか前から知り合いだった気がして。……不思議だよね、こういう出会い方って。誰かと初めて話す時、いつもちょっとだけ緊張するはずなのに、あなたとはなぜか自然体でいられる気がする。だから今日から、ずっとよろしくね。これからいろんな景色を、一緒に見ていけたら嬉しいな」</p>
+      </div>
+    </div>
+    <div class="member-card" onclick="this.classList.toggle('is-active')" style="--accent:#7ecbe8; --photo:url('embedded-04.jpg')">
+      <span class="member-hint">タップしてセリフを見る</span>
+      <span class="role">Keyboard — Mystic</span>
+      <h3>EIRU</h3>
+      <p>青のロングヘア。夕日と海が似合う、思索的で神秘的な佇まい。</p>
+          <div class="member-voice">
+        <p>「な、なによ、そんな見つめないでよ。……別に、もっと話したいとか思ってないから。ただ、私の歌が気になるっていうなら、ちゃんと最後まで聴きなさいよね。途中で気を抜いたら承知しないから。……本当はね、誰かにちゃんと届いてるって思えるだけで、少し安心するの。そんなこと、絶対言わないけど」</p>
+      </div>
+    </div>
+    <div class="member-card" onclick="this.classList.toggle('is-active')" style="--accent:#dfe3ef; --photo:url('embedded-05.jpg')">
+      <span class="member-hint">タップしてセリフを見る</span>
+      <span class="role">Guitar — Cool</span>
+      <h3>ALYA</h3>
+      <p>白銀のロングヘア。クールで知的、本屋の空気が似合うギタリスト。</p>
+          <div class="member-voice">
+        <p>「……普段はあまり喋らないの。言葉より先に、考えごとの方が多いから。うまく気持ちを声にできなくて、ずっと黙ってしまうことも多い。でもね、ギターを持った瞬間だけは違う。指先が動き出したら、止まらなくなるの。自分でも驚くくらいに。あの時だけは、誰よりも饒舌になれる気がする」</p>
+      </div>
+    </div>
+    <div class="member-card" onclick="this.classList.toggle('is-active')" style="--accent:#e0575c; --photo:url('embedded-06.jpg')">
+      <span class="member-hint">タップしてセリフを見る</span>
+      <span class="role">Bass — Passionate</span>
+      <h3>REINA</h3>
+      <p>赤の長い髪。情熱的でストリート感のあるロックな存在感。</p>
+          <div class="member-voice">
+        <p>「あ、えっと……よろしく、お願いします。……見た目と中身、違うってよく言われるんだけど。本当はこうやって、誰かと話すのがすごく苦手で。今もちょっと、声が震えてるかもしれない。でも、ステージに立つと不思議と怖くなくなるの。伝えたいことがあるからかな。だから、どうか少しずつ、私のことも知ってほしい」</p>
+      </div>
+    </div>
+    <div class="member-card" onclick="this.classList.toggle('is-active')" style="--accent:#ecc873; --photo:url('embedded-07.jpg')">
+      <span class="member-hint">タップしてセリフを見る</span>
+      <span class="role">Drums — Radiant</span>
+      <h3>CELES</h3>
+      <p>金髪ロング。太陽のような笑顔で、穏やかに明るく場を照らす。</p>
+          <div class="member-voice">
+        <p>「今日も元気100%!……なんてね。実はちょっと、無理してるところもあったりして。みんなを励ましたい気持ちが強すぎて、自分の弱さは後回しにしちゃうんだよね。だから、たまにはこっそり、弱音を聞いてくれる?誰にも言わないでね。……でも、そうやって誰かに寄りかかれるのも、悪くないなって最近思うの」</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LIVE ============ -->
+<section id="live">
+  <div class="section-head">
+    <span class="eyebrow">1st Live</span>
+    <h2>ETERNAL BLOOM 〜星が咲く夜に、君と永遠を誓う〜</h2>
+  </div>
+
+  <div class="live-feature">
+    <img src="embedded-08.jpg" alt="Celestial Rose 1st Live ETERNAL BLOOM, Live at Nippon Budokan" loading="lazy">
+  </div>
+  <div class="live-gallery">
+    <img src="embedded-09.jpg" alt="ANOSのボーカルとALYAのギター、CELESのドラム" loading="lazy">
+    <img src="embedded-10.jpg" alt="REINAのベースとEIRUのキーボード、ANOSのボーカル" loading="lazy">
+  </div>
+</section>
+
+<!-- ============ SONGS ============ -->
+<section id="songs">
+  <div class="section-head">
+    <span class="eyebrow">Discography</span>
+    <h2>楽曲一覧（全37曲）</h2>
+  </div>
+
+  <div class="songs-list">
+    <div class="song-row">
+      <span class="num">01</span>
+      <div><span class="title">Little by Little, Falling</span><div class="sub">Jロックバラード / 90年代の透明感</div></div>
+      <span class="vocal">ANOS</span>
+    </div>
+    <div class="song-row">
+      <span class="num">02</span>
+      <div><span class="title">Stardust Lullaby</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">03</span>
+      <div><span class="title">BURNING NOVA</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">04</span>
+      <div><span class="title">Hydrangea Night（あじさいのよる）</span><div class="sub">神秘的なミディアムナンバー</div></div>
+      <span class="vocal">EIRU</span>
+    </div>
+    <div class="song-row">
+      <span class="num">05</span>
+      <div><span class="title">ちびローズ☆パレード</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">06</span>
+      <div><span class="title">Summer Memories</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">07</span>
+      <div><span class="title">STARDUST MEMORY</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">08</span>
+      <div><span class="title">ETERNAL ROSE - ALYA Guitar Mix</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">09</span>
+      <div><span class="title">ETERNAL ROSE - Rebirth of Destiny</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">10</span>
+      <div><span class="title">夏の終わりの約束</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">11</span>
+      <div><span class="title">Eternal Snow</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">12</span>
+      <div><span class="title">Celestial Destiny</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">13</span>
+      <div><span class="title">蒼焔のシンフォニア</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">14</span>
+      <div><span class="title">Azure Breaker</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">15</span>
+      <div><span class="title">Frozen Hope</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">16</span>
+      <div><span class="title">いつか見た青空</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">17</span>
+      <div><span class="title">Good-bye Yesterday</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">18</span>
+      <div><span class="title">明日へ続く風</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">19</span>
+      <div><span class="title">星降る駅で</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">20</span>
+      <div><span class="title">蒼い風のメッセージ</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">21</span>
+      <div><span class="title">夏の終わりの夕暮れ</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">22</span>
+      <div><span class="title">「君と見た空の続き」</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">23</span>
+      <div><span class="title">AZURE PHOENIX</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">24</span>
+      <div><span class="title">BREAK MY FEAR</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">25</span>
+      <div><span class="title">I Believe in Me</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">26</span>
+      <div><span class="title">ETERNAL BRAVE</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">27</span>
+      <div><span class="title">明日へ続く空</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">28</span>
+      <div><span class="title">永遠の月へ</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">29</span>
+      <div><span class="title">蒼月の祈り</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">30</span>
+      <div><span class="title">星降る約束</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">31</span>
+      <div><span class="title">Beyond the Blue Sky</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">32</span>
+      <div><span class="title">CRIMSON DESTINY</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">33</span>
+      <div><span class="title">月下のセレナーデ</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">34</span>
+      <div><span class="title">Crystal Destiny</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">35</span>
+      <div><span class="title">蒼き運命の彼方へ</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">36</span>
+      <div><span class="title">『蒼き星の彼方へ』</span></div>
+      <span class="vocal"></span>
+    </div>
+    <div class="song-row">
+      <span class="num">37</span>
+      <div><span class="title">粉雪が降る夜</span></div>
+      <span class="vocal"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOCIAL ============ -->
+<section class="social" id="social">
+  <div class="section-head">
+    <span class="eyebrow">Follow</span>
+    <h2>星をたどる</h2>
+  </div>
+  <p style="color:rgba(242,238,230,0.65); max-width:32em; margin:0 auto;">TikTokとYouTubeで、短編動画と楽曲を配信中。</p>
+  <div class="social-links">
+    <a href="https://www.tiktok.com/@celestialrose_official" target="_blank" rel="noopener">TikTok</a>
+    <a href="https://youtube.com/@celestialroseofficial?si=XRXcagtnVTl0qezg" target="_blank" rel="noopener">YouTube</a>
+  </div>
+</section>
+
+<footer>
+  © Celestial Rose — 星々の間に咲く、五つの声。
+</footer>
+
+<script>
+  // ambient starfield
+  const canvas = document.getElementById('stars-canvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = document.body.scrollHeight;
+    const count = Math.floor((canvas.width * canvas.height) / 9000);
+    stars = Array.from({length: count}, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.2 + 0.3,
+      phase: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.015 + 0.005
+    }));
+  }
+
+  function draw(t){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for(const s of stars){
+      const twinkle = reduceMotion ? 0.7 : 0.5 + 0.5 * Math.sin(t * s.speed + s.phase);
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(242,238,230,${0.15 + twinkle * 0.55})`;
+      ctx.fill();
+    }
+    if(!reduceMotion) requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  draw(0);
+  if(reduceMotion) draw(0);
+
+
+  // v16 summer festival suite audio players (3 tracks)
+  const festivalTracks = [
+    { id: 'release1', title: 'Before the Light' },
+    { id: 'release2', title: 'Break the Shell' },
+    { id: 'release3', title: 'I Am, Still Here' }
+  ];
+
+  const festivalPlayers = festivalTracks.map(track => ({
+    ...track,
+    audio: document.getElementById(track.id + 'Audio'),
+    btn: document.getElementById(track.id + 'Play'),
+    icon: document.getElementById(track.id + 'PlayIcon'),
+    label: document.getElementById(track.id + 'PlayLabel')
+  })).filter(p => p.audio && p.btn);
+
+  function updateFestivalButton(p){
+    const playing = !p.audio.paused && !p.audio.ended;
+    p.btn.classList.toggle('is-playing', playing);
+    p.icon.textContent = playing ? 'Ⅱ' : '▶';
+    p.label.textContent = playing ? 'PAUSE' : 'PLAY';
+    p.btn.setAttribute('aria-label', playing ? (p.title + 'を一時停止') : (p.title + 'を再生'));
+  }
+
+  festivalPlayers.forEach(p => {
+    p.btn.addEventListener('click', async () => {
+      try{
+        if(p.audio.paused){
+          festivalPlayers.forEach(other => {
+            if(other !== p && !other.audio.paused) other.audio.pause();
+          });
+          await p.audio.play();
+        }else{
+          p.audio.pause();
+        }
+      }catch(error){
+        console.warn('Audio playback was blocked or failed.', error);
+      }
+      updateFestivalButton(p);
+    });
+
+    p.audio.addEventListener('play', () => updateFestivalButton(p));
+    p.audio.addEventListener('pause', () => updateFestivalButton(p));
+    p.audio.addEventListener('ended', () => {
+      p.audio.currentTime = 0;
+      updateFestivalButton(p);
+    });
+  });
+
+</script>
+
+
+<!-- ===== Visitor Counter Widget (Celestial Rose) ===== -->
+<style>
+  #crVisitorWrap{
+    position:fixed; z-index:9999; text-align:center;
+    right:14px; bottom:14px;
+    font-family:'Zen Kaku Gothic New', sans-serif;
+    pointer-events:none;
+  }
+  #crVisitorWrap .cr-label{
+    font-family:'Cinzel', serif; font-size:9px; letter-spacing:.2em;
+    color:#b98fd1; text-transform:uppercase; margin-bottom:6px; opacity:.85;
+  }
+  #crVisitorWrap .cr-counter-box{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:8px 12px; border-radius:10px;
+    background:linear-gradient(160deg, rgba(40,30,60,.55), rgba(15,15,30,.65));
+    border:1px solid rgba(200,170,255,.25);
+    box-shadow:0 0 16px rgba(150,100,220,.15), inset 0 0 10px rgba(180,140,255,.08);
+    backdrop-filter: blur(6px);
+  }
+  #crVisitorWrap .cr-rose-icon{ font-size:13px; filter:drop-shadow(0 0 4px rgba(255,140,180,.7)); }
+  #crVisitorWrap .cr-digits{ display:flex; gap:2px; }
+  #crVisitorWrap .cr-digit{
+    width:16px; height:22px; border-radius:3px;
+    background:rgba(10,8,20,.6);
+    border:1px solid rgba(200,170,255,.3);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:600;
+    color:#f2e9ff;
+    text-shadow:0 0 6px rgba(190,150,255,.8);
+    transition: box-shadow .4s ease, transform .4s ease;
+  }
+  #crVisitorWrap .cr-digit.flash{
+    box-shadow:0 0 12px rgba(255,190,230,.9), 0 0 20px rgba(180,140,255,.6);
+    transform: translateY(-1px);
+    border-color:#ffd9ee;
+  }
+  @media (max-width:600px){
+    #crVisitorWrap{ right:8px; bottom:8px; }
+    #crVisitorWrap .cr-counter-box{ padding:6px 9px; }
+    #crVisitorWrap .cr-digit{ width:13px; height:18px; font-size:10px; }
+  }
+</style>
+<div id="crVisitorWrap">
+  <div class="cr-label">✧ Visitors ✧</div>
+  <div class="cr-counter-box">
+    <span class="cr-rose-icon">🌹</span>
+    <div class="cr-digits" id="crDigits"></div>
+  </div>
+</div>
+<script>
+(function(){
+  var digitsEl = document.getElementById('crDigits');
+  // countapi.xyz (the original free counting service) shut down, so this
+  // uses its community-run successor, countapi.mileshilliard.com. That
+  // service uses one flat unique key instead of namespace+key, so combine
+  // them into a single string to avoid colliding with anyone else's counter.
+  var KEY = 'celestial-rose-official-homepage-visits';
+
+  function renderNumber(num, animate){
+    var str = String(num).padStart(6,'0');
+    digitsEl.innerHTML = '';
+    str.split('').forEach(function(ch, i){
+      var d = document.createElement('div');
+      d.className = 'cr-digit' + (animate ? ' flash' : '');
+      d.textContent = ch;
+      digitsEl.appendChild(d);
+      if(animate){
+        setTimeout(function(){ d.classList.remove('flash'); }, 900 + i*80);
+      }
+    });
+  }
+
+  fetch('https://countapi.mileshilliard.com/api/v1/hit/' + KEY)
+    .then(function(res){ return res.json(); })
+    .then(function(data){ renderNumber(parseInt(data.value,10) || 0, true); })
+    .catch(function(){ renderNumber(0, false); });
+})();
+</script>
+<!-- ===== /Visitor Counter Widget ===== -->
+
+</body>
+</html>
