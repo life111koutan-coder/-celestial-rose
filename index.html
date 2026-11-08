@@ -628,21 +628,21 @@
 
   <div class="shorts-grid">
     <div class="short-item">
-      <div class="short-media" data-video-prefix="video-01" data-video-parts="6" data-video-bytes="233322417">
+      <div class="short-media" data-video-prefix="video-01-mobile" data-video-parts="9" data-video-bytes="73010956">
         <video controls playsinline preload="none"></video>
         <button class="short-load" type="button">星降る駅で<br>読み込んで再生</button>
       </div>
       <div class="short-title">星降る駅で</div>
     </div>
     <div class="short-item">
-      <div class="short-media" data-video-prefix="video-02" data-video-parts="5" data-video-bytes="180330761">
+      <div class="short-media" data-video-prefix="video-02-mobile" data-video-parts="6" data-video-bytes="52214501">
         <video controls playsinline preload="none"></video>
         <button class="short-load" type="button">Eternal Snow<br>読み込んで再生</button>
       </div>
       <div class="short-title">Eternal Snow</div>
     </div>
     <div class="short-item">
-      <div class="short-media" data-video-prefix="video-03" data-video-parts="5" data-video-bytes="172809462">
+      <div class="short-media" data-video-prefix="video-03-mobile" data-video-parts="5" data-video-bytes="43410187">
         <video controls playsinline preload="none"></video>
         <button class="short-load" type="button">FIND THE WAY<br>読み込んで再生</button>
       </div>
@@ -1190,14 +1190,23 @@
       const parts = [];
       let receivedBytes = 0;
       try {
-        for (let number = 1; number <= partCount; number++) {
-          button.textContent = `読み込み中 ${Math.round(receivedBytes / expectedBytes * 100)}%`;
-          const path = `media/${prefix}.part${String(number).padStart(2, '0')}`;
-          const response = await fetch(path);
-          if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
-          const part = await response.arrayBuffer();
-          parts.push(part);
-          receivedBytes += part.byteLength;
+        button.textContent = '読み込み中 0%';
+        const controller = new AbortController();
+        try {
+          await Promise.all(Array.from({ length: Math.min(4, partCount) }, async (_, worker) => {
+            for (let index = worker; index < partCount; index += 4) {
+              const path = `media/${prefix}.part${String(index + 1).padStart(2, '0')}`;
+              const response = await fetch(path, { signal: controller.signal });
+              if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
+              const part = await response.arrayBuffer();
+              parts[index] = part;
+              receivedBytes += part.byteLength;
+              button.textContent = `読み込み中 ${Math.round(receivedBytes / expectedBytes * 100)}%`;
+            }
+          }));
+        } catch (error) {
+          controller.abort();
+          throw error;
         }
         if (receivedBytes !== expectedBytes) throw new Error('動画のサイズが一致しません');
 
@@ -1309,3 +1318,4 @@
 
 </body>
 </html>
+
